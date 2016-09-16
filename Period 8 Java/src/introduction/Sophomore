@@ -1,0 +1,16 @@
+package introduction;
+
+public class Sophomore extends Student {
+	
+	String oldSchool;
+	
+	public Sophomore(String name, String oldSchool) {
+		super(name); //constructs a student first
+		this.oldSchool = oldSchool; 
+	}
+	
+	public void talk(){
+		super.talk();
+		System.out.println("and I'm a Sophomore. I graduated from "+oldSchool);
+	}
+}
