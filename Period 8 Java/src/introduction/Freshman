@@ -1,0 +1,26 @@
+package introduction;
+
+public class Freshman extends Student {
+
+	int studentAge;
+	
+	public Freshman(String name, int age) {
+		super(name); //constructs a student first
+		this.studentAge = age;
+	}
+	
+	public void talk(){
+		super.talk();
+		if(this.studentAge > 15){
+			System.out.println("...and I'm older than average for my grade.");
+		}
+		else if(this.studentAge < 15){
+			System.out.println("...and I'm older than average for my grade.");
+		}
+		else{
+			System.out.println("...and I'm average age for my grade.");
+			
+		}
+	}
+}
+		
