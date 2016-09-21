@@ -1,0 +1,35 @@
+package introduction;
+
+public class RandomCardDraw {
+
+	public static void main(String[] args) {
+		String card1 = drawCard();
+		String suit1 = pickSuit();
+		System.out.println("The "+card1+" of "+suit1);
+	}
+	
+	public static String drawCard() {
+		String[] deck = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
+		double rand = Math.random(); //returns a double between zero and one, but never zero or one
+		int roll = (int)(13*rand);
+		return deck[roll];
+	}
+	
+	public static String pickSuit() {
+		String[] deck = {"Spades", "Hearts", "Clubs", "Diamonds"};
+		double rand = Math.random(); //returns a double between zero and one, but never zero or one
+		int roll = (int)(4*rand);
+		return deck[roll];
+	}
+	
+	public static int codifyCard(String card){
+		String[] deck = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
+		int cardCheck = 0;
+		for (int i = 0; i < 13; i++) {
+			if (card == deck[i]){
+				cardCheck = i;
+			}
+		}
+		return cardCheck;
+	}
+}
