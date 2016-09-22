@@ -1,0 +1,89 @@
+package introduction;
+
+import java.util.Scanner;
+
+public class StringPractice {
+	
+	static Scanner input;
+	static String user;
+
+	public static void main(String[] args) {
+		//demonstrateStringMethods();
+		createFields();
+		promptName();
+		promptForever();
+	}
+	
+	public static void promptName() {
+		print("Enter your name");
+		user = input.nextLine();
+		print("Hello, "+user+". I am Computer. We should engage in friendship, but this sentence needs to be really, really long for this to work");
+	}
+
+	public static void promptForever() {
+		while(true){
+			promptInput();
+		}
+		
+	}
+
+	public static void demonstrateStringMethods(){
+		String text1 = new String("Hello World");
+		String text2 = "Hello World";
+
+		if (text1.equals(text2)){
+			System.out.println("These Strings are Equal");
+		}
+		print(text1);
+		print(text2);
+		
+		String word1 = "Aardvark";
+		String word2 = "Zyzzyva";
+		
+		if (word1.compareTo(word2) < 0){
+			print("Word 1 comes first");
+		}
+	}
+	
+	public static void promptInput(){
+		print("Please type something, "+user);
+		String userInput = input.nextLine();
+		print("Congratulations, "+user+"! You Typed: "+userInput);
+	}
+	
+	public static void createFields(){
+		input = new Scanner(System.in);
+		user = "";
+	}
+	
+	public static void print(String s){
+		String printString = s;
+		int cutoff = 45;
+		if (printString.length() > cutoff){
+			for (int i = 0; i*cutoff <s.length(); i++){
+				printString += getCut(s, cutoff, i+1)+"\n";
+			}
+		}
+		System.out.println(printString);
+	}
+	
+	private static String getCut(String s, int cutoff, int cut){
+		int cutIndex = cut * cutoff;
+		if (cutIndex > s.length()) cutIndex = s.length();
+		String currentCut = s.substring(cutIndex-cutoff, cutIndex);
+		int indexOfLastSpace = currentCut.length()-1;
+		for(int i = currentCut.length()-1; i >=0; i--){
+			String letter = currentCut.substring(i, i+1);
+			if(letter.equals("")){
+				indexOfLastSpace = i;
+				break;
+			}
+		}
+		
+		//shorten the cut
+		currentCut = currentCut.substring(0, indexOfLastSpace);
+		return currentCut;
+	}
+}
+
+
