@@ -1,0 +1,21 @@
+package chatbot;
+
+public class SagawaSchool implements Chatbot{
+
+private boolean inSchoolLoop;
+private String schoolResponse;
+	
+	public void talk() {
+		inSchoolLoop = true;
+		while(inSchoolLoop){
+			SagawaMain.print("Type 'quit' to go back.");
+			schoolResponse = SagawaMain.promptInput();
+			if(schoolResponse.indexOf("quit") >= 0){
+				inSchoolLoop = false;
+				SagawaMain.promptForever();
+			}
+			SagawaMain.print("That's my favorite part" + "about school");
+		}
+	}
+
+}
