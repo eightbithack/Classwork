@@ -1,0 +1,62 @@
+package introduction;
+
+import java.util.Scanner;
+
+public class Quiz1 {
+
+	static Scanner input = new Scanner(System.in);
+	
+	public static String waitForEntry(){
+		return input.nextLine();
+	}
+
+	//1 point visibility private
+	//1 point for data type declaration (throughout)
+	private static String username = "test_user";
+	private static String password = "test";
+	
+	//1 point correct method
+	public static void main(String []args){
+		//1 point asking username once
+		if(correctUser()){
+			askPassword();
+		}
+		else{
+			System.out.println("error message");
+		}
+	}
+
+	private static void askPassword() {
+		boolean inLoop = true;
+		int triesRemaining = 3;
+		while(inLoop){
+			System.out.println("Enter your password");
+			String entry = waitForEntry();
+			if (entry.equals(password)){
+				System.out.println("You're in");
+				inLoop = false;
+				break;
+			}
+			else {
+				//.5 point if triesRemaining is changing
+				triesRemaining--;
+			}
+			if (triesRemaining == 0){
+				//.5 point prints invalid password
+				System.out.println("Invalid password");
+				//.5 point MAX three tries
+				inLoop = false;
+			}
+			else{
+				//.5 point if it prints the right number of tries
+				System.out.println("You have " + triesRemaining + " tries remaining");
+			}
+		}
+	}
+
+	private static boolean correctUser() {
+		System.out.println("Enter a user name");
+		//1 point comparing strings
+		return waitForEntry().equals(username);		
+	}
+}
