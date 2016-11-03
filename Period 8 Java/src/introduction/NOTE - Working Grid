@@ -1,0 +1,35 @@
+package caveExplorer;
+
+public class caveMaker {
+
+	public static void main(String[] args){
+		String[][] caveLayout = new String[16][16];
+		for (int row = 0; row < caveLayout.length; row +=3){
+			for (int col = 0; col < caveLayout[row].length; col ++){
+				caveLayout[row][col] = "_";
+			}
+		}
+		for (int row = 1; row < caveLayout.length; row ++){
+			for (int col = 0; col < caveLayout[row].length; col += 3){
+				caveLayout[row][col] = "|";
+			}
+		}
+		for (int row = 0; row < caveLayout.length; row ++){
+			for (int col = 0; col < caveLayout[row].length; col ++){
+				if (caveLayout[row][col] == null){
+					caveLayout[row][col] = " ";
+				}
+			}
+		}
+		printPic(caveLayout);
+	}
+	
+	public static void printPic (String[][] pic){
+		for(String[] row : pic){
+			for(String col: row){
+				System.out.print(col);
+			}
+			System.out.println();
+		}
+	}
+}
