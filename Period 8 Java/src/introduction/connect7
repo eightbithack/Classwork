@@ -1,0 +1,113 @@
+package caveExplorer;
+
+import java.util.Scanner;
+
+public class Connect7 {
+
+	public static Scanner in = new Scanner(System.in);
+	static String[][] arr2D;
+	static String[][] pic;
+	static int[] numberOfCol;
+	static String[][] connect7;
+	
+	public static void main(String[] args){
+		String[][] connect7 = new String[7][17];
+		numberOfCol = new int[8];
+		
+		int printNum = 0;
+		for (int col = 1; col < connect7[0].length; col +=2){
+			connect7[0][col] = ""+printNum;
+			printNum++;
+		}
+		for (int row = 1; row < connect7.length; row ++){
+			for (int col = 0; col < connect7[row].length; col += 2){
+				connect7[row][col] = "|";
+			}
+		}
+		for (int row = 0; row < connect7.length; row ++){
+			for (int col = 0; col < connect7[row].length; col ++){
+				if (connect7[row][col] == null){
+					connect7[row][col] = " ";
+				}
+			}
+		}
+		
+		printPic(connect7);
+		startGame();
+		
+		
+	}
+	
+	private static void startGame() {
+		while (true){
+			System.out.println("Which column do you want to drop a piece into?");
+			String input = in.nextLine();
+			checkIfFull(input);
+			System.out.println("You drop a piece into column " + input + ".");	
+			int[] newCoordinates = interpretInput(input);
+		}
+		
+	}
+
+
+	private static void checkIfFull(String input) {
+		for(int i = 0; i < connect7.length - 1; i++){
+			if(input.equals("" + i) && numberOfCol[i] >= connect7.length - 1){
+				System.out.println("Column " + input + " is full. Choose another column");
+			}
+		}
+	}
+
+	private static int[] interpretInput(String input) {
+		while(!IsValid(input)){
+			System.out.println("Sorry, in this game, you can only use WASD.");
+			System.out.println("Tell me again what you would like to do.");
+			input = in.nextLine();
+		}
+		int currenti = starti;
+		int currentj = startj;
+		input = input.toLowerCase();
+		if (input.equals("w")){
+			currenti--;
+		}
+		if (input.equals("s")){
+			currenti++;
+		}
+		if (input.equals("a")){
+			currentj--;
+		}
+		if (input.equals("d")){
+			currentj++;
+		}
+		int[] newCoordinates = {starti, startj};
+		if(currenti>=0 && currenti < arr2D.length && currentj >= 0 && currentj < arr2D[0].length){
+			newCoordinates[0] = currenti;
+			newCoordinates[1] = currentj;
+		}
+		else{
+			System.out.println("You've reached the edge");
+		}
+		return newCoordinates;
+	}
+
+	
+	private static boolean IsValid(String input) {
+		String[] validKeys = {"w", "a", "s", "d"};
+		for (String key : validKeys){
+			if (input.toLowerCase().equals(key)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static void printPic (String[][] pic){
+		for(String[] row : pic){
+			for(String col: row){
+				System.out.print(col);
+			}
+			System.out.println();
+		}
+	}
+
+}
