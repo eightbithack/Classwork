@@ -1,0 +1,193 @@
+package caveExplorer;
+
+public class EventRoom extends CaveRoomPd8 {
+
+	private boolean eventHappened;
+	private Playable event;
+	
+	public EventRoom(String description, Playable event) {
+		super(description);
+		eventHappened = false;
+		this.event = event;
+	}
+
+	public void enter(){
+		//make all the normal things happen
+		super.enter();
+		if(!eventHappened){
+			eventHappened = true;
+			event.play();
+		}
+	}
+	
+}
+
+
+
+
+package caveExplorer;
+
+public class GameStartEvent implements Playable {
+
+	private static final String[] SEQUENCE_1 = {"Satan causually strides up to you", "Hi. I can see you are not from around here.", "Do you like puzzles?"}; 
+	private static final String[] SEQUENCE_2 = {"You are going to have so much fun playing my 2-D games.", "Take this map"};
+	
+	public GameStartEvent() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void play() {
+		readSequence(SEQUENCE_1);
+		while(CaveExplorer.in.nextLine().toLowerCase().indexOf("yes") < 0){
+			CaveExplorer.print("C'mon! You know you like puzzles. Say Yes, friend.");
+		}
+		readSequence(SEQUENCE_2);
+		CaveExplorer.inventory.setHasMap(true);
+	}
+	
+	public static void readSequence(String[] seq){
+		for(String s : seq){
+			CaveExplorer.print(s);
+			CaveExplorer.print("- - - press enter - - -");
+			CaveExplorer.in.nextLine();
+		}
+	}
+
+}
+
+
+
+
+package caveExplorer;
+
+public interface Playable {
+
+	public void play();
+}
+
+
+
+
+
+
+package caveExplorer;
+
+public class Door {
+	
+	private boolean open;
+	private boolean locked;
+	private String description;
+	private String details;
+	
+	public Door() {
+		open = true;
+		locked = false;
+		description = "Door";
+		details = "";
+	}
+
+	public boolean isOpen() {
+		return open;
+	}
+
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+}
+
+
+
+
+
+package caveExplorer;
+
+public class InventoryNockles {
+	
+	private boolean hasMap;
+	private String map;
+	public InventoryNockles() {
+		hasMap = false;
+		updateMap();
+	}
+	
+	
+
+	public void setHasMap(boolean hasMap) {
+		this.hasMap = hasMap;
+	}
+
+
+
+	public void updateMap() {
+		CaveRoomPd8[][] caves = CaveExplorer.caves;
+		//create top
+		map = " ";
+		//horizontal line across top row with width 4
+		for(int i = 0; i < caves[0].length-1; i++){
+			map+="____";
+		}
+		map+="___\n";
+		//each room
+		for(CaveRoomPd8[] row: caves){
+			//there are three rows of text
+			for(int textRow = 0; textRow < 3; textRow++){
+				//the text is for each room
+				for(CaveRoomPd8 cr : row){
+					String str = "|   ";
+					String contents = cr.getContents();
+					
+					if(textRow == 1){
+						if(cr.getDoor(CaveRoomPd8.WEST)!=null && cr.getDoor(CaveRoomPd8.WEST).isOpen()){
+							str = "  "  + contents + " ";
+						}
+						else{
+							str = "| " + contents + " " ;
+						}
+					}
+					else if (textRow == 2){
+						if(cr.getDoor(CaveRoomPd8.SOUTH) == null){
+							str = "|___";
+						}
+						else{
+							str = "|_ _";
+						}
+					}
+					map+=str;
+				}//end of row of caverooms
+				map+="|\n";
+			}
+		}
+	}
+
+	public String getDescription() {
+		if(hasMap)return map;
+		else return "You have no inventory.";
+	}
+
+}
